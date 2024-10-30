@@ -1,0 +1,60 @@
+ <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AJAX Example</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      #content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      button {
+        padding: 10px 20px;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content">
+      <button id="loadBtn">Load Data</button>
+      <div id="data"></div>
+    </div>
+    <script>
+      document.getElementById("loadBtn").addEventListener("click", () => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://jsonplaceholder.typicode.com/posts/1", true);
+        xhr.onload = function () {
+          if (this.status === 200) {
+            const post = JSON.parse(this.responseText);
+            document.getElementById("data").innerHTML = `
+        <h2>${post.title}</h2>
+        <p>${post.body}</p>
+      `;
+          } else {
+            document.getElementById("data").innerHTML = "Error loading data.";
+          }
+        };
+        xhr.send();
+      });
+    </script>
+  </body>
+</html>
